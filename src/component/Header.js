@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import Box from '@material-ui/core/Box';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
+// import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { PATH_APP } from '../../src/path';
+
+
 
 const useStyles = makeStyles({
 mainMenu: {
    backgroundColor:'rgb(0, 51, 157)',
    padding:'10px',
-   marginTop:'0px'
+   marginTop:'0px',
 },
 buttonItem: {
     color:'white',
@@ -20,22 +26,30 @@ buttonItem: {
 export default function Header() {
 const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = React.useState(false);
+  const history = useNavigate();
+  const onDetail = rowId => {
+    history.push(`${PATH_APP.invoice.invoice.detail}/${rowId}`, {
+    });
+  };
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
-
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handlOpen =() => {
-      setOpen(true);
-  }
+//   const handlOpen =() => {
+//       setOpen(true);
+//   }
 
   return (
+    <>
     <Box className={classes.mainMenu}>
-      <Link href="/home" aria-controls="simple-menu" aria-haspopup="true" className={classes.buttonItem} onClick={handlOpen}
+      <Link href="/home" aria-controls="simple-menu" aria-haspopup="true" className={classes.buttonItem} 
       >
         HOME
       </Link>
@@ -48,7 +62,7 @@ const classes = useStyles();
         CONTACT US
       </Link>
 
-      <Link href="" aria-controls="simple-menu" aria-haspopup="true" className={classes.buttonItem} onClick={handleClick}
+      <Link aria-controls="simple-menu" aria-haspopup="true" className={classes.buttonItem} onClick={handleClick}
       >
         ALL PRODUCTS
       </Link>
@@ -59,10 +73,11 @@ const classes = useStyles();
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Computer</MenuItem>
+        <MenuItem onClick={onDetail}>Computer</MenuItem>
         <MenuItem onClick={handleClose}>Phone</MenuItem>
         <MenuItem onClick={handleClose}>Watch</MenuItem>
       </Menu>
     </Box>
+    </>
   );
 }
