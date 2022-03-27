@@ -15,7 +15,6 @@ const classes = useStyles();
 
   return (
     <div><Header/>
-    <Box>Hello World</Box>
     <Footer/>
     </div>
   );
